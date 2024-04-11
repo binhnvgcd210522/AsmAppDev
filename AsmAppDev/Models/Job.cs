@@ -6,9 +6,9 @@ namespace AsmAppDev.Models
 {
 	public class Job 
 	{
-		public int JId { get; set; }
-		public string JTitle { get; set; }
-		public string JDescription { get; set; }
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Description { get; set; }
 		public string requiredQualification { get; set; }
 		public DateTime Deadline { get; set; }
 		[ValidateNever]
