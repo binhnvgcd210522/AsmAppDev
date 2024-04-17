@@ -1,0 +1,26 @@
+﻿@model Category
+
+<h2>Delete a new Account</h2>
+
+<form method="post" asp-action="Delete">
+    <input asp-for="Id" hidden />
+    <hr />
+    <div class="mb-3">
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name" class="form-control" disabled />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Availability">Address</label>
+        <input asp-for="Availability" class="form-control" disabled />
+    </div>
+    @*<div class="mb-3">
+        <label asp-for="UserId">City</label>
+        <input asp-for="UserId" class="form-control" disabled />
+    </div>*@
+    <button type="submit" class="w-100 btn btn-lg btn-primary">Delete</button>
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

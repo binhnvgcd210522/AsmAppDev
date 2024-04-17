@@ -1,17 +1,16 @@
 ﻿using AsmAppDev.Models;
+using AsmAppDev.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace AsmAppDev.Data
 {
-	public class ApplicationDBContext : DbContext
+	public class ApplicationDBContext : IdentityDbContext
 	{
-		public DbSet<Employer> Employers { get; set; }
-		public DbSet<JobSeeker> JobSeekers { get; set; }
-		public DbSet<Admin> Admins { get; set; }
+		public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 		public DbSet<Job> Jobs { get; set; }
 		public DbSet<Category> Categories { get; set; }
-
 
 		public ApplicationDBContext(DbContextOptions options) : base(options)
 		{
@@ -21,10 +20,10 @@ namespace AsmAppDev.Data
 		{
 			base.OnModelCreating(modelBuilder);
 			modelBuilder.Entity<Category>().HasData(
-				new Category { Id = 1, Name = "Business", Description = "Senior" },
-				new Category { Id = 2, Name = "Information Technology", Description = "So Hard" },
-				new Category { Id = 3, Name = "Sale", Description = "Sale everything" },
-				new Category { Id = 4, Name = "Finance", Description = "Earn money" }
+				new Category { Id = 1, Name = "Business", DateCreate = new DateTime(2024, 10, 27), Availability = true, UserId = "89bf0a61-e7cf-4efe-a7c8-83631a253554" },
+				new Category { Id = 2, Name = "Information Technology", DateCreate = new DateTime(2024, 10, 28), Availability = true, UserId = "89bf0a61-e7cf-4efe-a7c8-83631a253554" },
+				new Category { Id = 3, Name = "Sale", DateCreate = new DateTime(2024, 10, 29), Availability = true, UserId = "89bf0a61-e7cf-4efe-a7c8-83631a253554" },
+				new Category { Id = 4, Name = "Finance", DateCreate = new DateTime(2024, 10, 30), Availability = true, UserId = "89bf0a61-e7cf-4efe-a7c8-83631a253554" }
 			   );
 			modelBuilder.Entity<Job>().HasData(
 				new Job

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AsmAppDev.Models
@@ -11,9 +10,12 @@ namespace AsmAppDev.Models
 		public string Description { get; set; }
 		public string requiredQualification { get; set; }
 		public DateTime Deadline { get; set; }
+
 		[ValidateNever]
-		public int? CategoryId { get; set; }
+		public int CategoryId { get; set; }
 		[ForeignKey("CategoryId")]
+
+		[ValidateNever]
 		public Category Category { get; set; }
 	}
 }

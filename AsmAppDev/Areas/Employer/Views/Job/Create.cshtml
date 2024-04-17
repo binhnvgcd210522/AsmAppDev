@@ -1,0 +1,37 @@
+﻿@model JobVM
+<h1>Create a job</h1>
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="mb-3 row">
+            <label asp-for="Job.Title"></label>
+            <input asp-for="Job.Title">
+            <span asp-validation-for="Job.Title" class="text-danger"></span>
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="Job.Description"></label>
+            <input asp-for="Job.Description">
+            <span asp-validation-for="Job.Description" class="text-danger"></span>
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="Job.requiredQualification">Required Qualification</label>
+            <input asp-for="Job.requiredQualification">
+            <span asp-validation-for="Job.requiredQualification" class="text-danger"></span>
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="Job.Deadline"></label>
+            <input asp-for="Job.Deadline">
+            <span asp-validation-for="Job.Deadline" class="text-danger"></span>
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="Job.Category"></label>
+            <select asp-for="Job.CategoryId" asp-items="@Model.Categories"></select>
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a asp-controller="Job" asp-action="Index" class="btn btn-primary">Back to List</a>
+    </div>
+</form>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

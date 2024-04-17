@@ -21,6 +21,9 @@ namespace AsmAppDev.Repository
 			{
 				query.Include(includedProperty).ToList();
 			}
+			
+			
+			
 			return query.ToList();
 		}
 		public T Get(Expression<Func<T, bool>> predicate, string? includedProperty = null)

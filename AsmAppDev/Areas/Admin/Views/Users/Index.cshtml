@@ -1,0 +1,52 @@
+﻿@model List<ApplicationUser>
+<partial name="_Notification" />
+<h1>List of Users</h1>
+
+<table class="table table-bordered">
+    <a asp-area="Identity" asp-page="/Account/CreateAccountE" class="btn btn-success"><i class="bi bi-plus-lg"></i> Create New Account</a>
+    @* <a asp-controller="Users" asp-action="Create" class="btn btn-success"><i class="bi bi-plus-lg"></i> Create New Account</a> *@
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.Email</td>
+                <td>@user.Name</td>
+                <td>@user.Address</td>
+                <td>@user.City</td>
+                <td>
+                    @(user.Status ? "Active" : "Inactive")
+                    @if (user.Status)
+                    {
+                        <form asp-controller="Users" asp-action="ToggleStatus" method="post">
+                            <input type="hidden" name="id" value="@user.Id" />
+                            <button type="submit" class="btn btn-danger">Disable</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-controller="Users" asp-action="ToggleStatus" method="post">
+                            <input type="hidden" name="id" value="@user.Id" />
+                            <button type="submit" class="btn btn-success">Enable</button>
+                        </form>
+                    }
+                </td>
+                <td>
+                    @* <button class="btn btn-danger delete-button" data-id="@user.Id">Delete</button> *@
+                    <a asp-controller="Users" asp-action="Delete" asp-route-id=@user.Id>Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
