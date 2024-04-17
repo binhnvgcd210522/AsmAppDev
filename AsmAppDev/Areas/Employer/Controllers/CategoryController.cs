@@ -46,7 +46,6 @@ namespace AsmAppDev.Areas.Users.Controllers
                 if(userId != null)
                 {
                     category.UserId = userId;
-
                     _unitOfWork.CategoryRepository.Add(category);
                     _unitOfWork.CategoryRepository.Save();
                     TempData["success"] = "Category created successfully";
