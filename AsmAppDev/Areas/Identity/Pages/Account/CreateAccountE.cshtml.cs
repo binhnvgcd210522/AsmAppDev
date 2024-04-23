@@ -115,6 +115,7 @@ namespace AsmAppDev.Areas.Identity.Pages.Account
             if (!_roleManager.RoleExistsAsync("Admin").GetAwaiter().GetResult())
             {
                 _roleManager.CreateAsync(new IdentityRole("Admin")).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole("JobSeeker")).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole("Employer")).GetAwaiter().GetResult();
             }
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -127,7 +128,7 @@ namespace AsmAppDev.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-                _userManager.AddToRoleAsync(user, "Customer").GetAwaiter().GetResult();
+                _userManager.AddToRoleAsync(user, "Employer").GetAwaiter().GetResult();
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 user.Name = Input.Name;

@@ -11,6 +11,7 @@ namespace AsmAppDev.Data
 		public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 		public DbSet<Job> Jobs { get; set; }
 		public DbSet<Category> Categories { get; set; }
+		public DbSet<JobApplication> JobApplications { get; set; }
 
 		public ApplicationDBContext(DbContextOptions options) : base(options)
 		{
@@ -20,12 +21,16 @@ namespace AsmAppDev.Data
 		{
 			base.OnModelCreating(modelBuilder);
 			modelBuilder.Entity<Category>().HasData(
-				new Category { Id = 1, Name = "Business", DateCreate = new DateTime(2024, 10, 27), Availability = true, UserId = "89bf0a61-e7cf-4efe-a7c8-83631a253554" },
-				new Category { Id = 2, Name = "Information Technology", DateCreate = new DateTime(2024, 10, 28), Availability = true, UserId = "89bf0a61-e7cf-4efe-a7c8-83631a253554" },
-				new Category { Id = 3, Name = "Sale", DateCreate = new DateTime(2024, 10, 29), Availability = true, UserId = "89bf0a61-e7cf-4efe-a7c8-83631a253554" },
-				new Category { Id = 4, Name = "Finance", DateCreate = new DateTime(2024, 10, 30), Availability = true, UserId = "89bf0a61-e7cf-4efe-a7c8-83631a253554" }
+				new Category { Id = 1, Name = "Business", DateCreate = new DateTime(2024, 10, 27), Availability = true, UserId = "da94d7cd-6ac4-4c5d-9195-289b8e8ce846" },
+				new Category { Id = 2, Name = "Information Technology", DateCreate = new DateTime(2024, 10, 28), Availability = true, UserId = "da94d7cd-6ac4-4c5d-9195-289b8e8ce846" },
+				new Category { Id = 3, Name = "Sale", DateCreate = new DateTime(2024, 10, 29), Availability = true, UserId = "da94d7cd-6ac4-4c5d-9195-289b8e8ce846" },
+				new Category { Id = 4, Name = "Finance", DateCreate = new DateTime(2024, 10, 30), Availability = true, UserId = "da94d7cd-6ac4-4c5d-9195-289b8e8ce846" }
 			   );
-			modelBuilder.Entity<Job>().HasData(
+			modelBuilder.Entity<JobApplication>().HasData(
+				new JobApplication { Id = 9, JobId = 1, UserId = "9eb14563-29d9-4045-8167-9efdefa94604" },
+				new JobApplication { Id = 10, JobId = 2, UserId = "9eb14563-29d9-4045-8167-9efdefa94604" }
+				);
+            modelBuilder.Entity<Job>().HasData(
 				new Job
 				{
 					Id = 1,

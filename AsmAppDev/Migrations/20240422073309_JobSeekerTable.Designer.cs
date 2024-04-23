@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AsmAppDev.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240415094715_AddCategoríe")]
-    partial class AddCategoríe
+    [Migration("20240422073309_JobSeekerTable")]
+    partial class JobSeekerTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,7 +60,7 @@ namespace AsmAppDev.Migrations
                             Availability = true,
                             DateCreate = new DateTime(2024, 10, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Business",
-                            UserId = "89bf0a61-e7cf-4efe-a7c8-83631a253554"
+                            UserId = "da94d7cd-6ac4-4c5d-9195-289b8e8ce846"
                         },
                         new
                         {
@@ -68,7 +68,7 @@ namespace AsmAppDev.Migrations
                             Availability = true,
                             DateCreate = new DateTime(2024, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Information Technology",
-                            UserId = "89bf0a61-e7cf-4efe-a7c8-83631a253554"
+                            UserId = "da94d7cd-6ac4-4c5d-9195-289b8e8ce846"
                         },
                         new
                         {
@@ -76,7 +76,7 @@ namespace AsmAppDev.Migrations
                             Availability = true,
                             DateCreate = new DateTime(2024, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Sale",
-                            UserId = "89bf0a61-e7cf-4efe-a7c8-83631a253554"
+                            UserId = "da94d7cd-6ac4-4c5d-9195-289b8e8ce846"
                         },
                         new
                         {
@@ -84,7 +84,7 @@ namespace AsmAppDev.Migrations
                             Availability = true,
                             DateCreate = new DateTime(2024, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Finance",
-                            UserId = "89bf0a61-e7cf-4efe-a7c8-83631a253554"
+                            UserId = "da94d7cd-6ac4-4c5d-9195-289b8e8ce846"
                         });
                 });
 
@@ -96,8 +96,7 @@ namespace AsmAppDev.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CategoryId")
-                        .IsRequired()
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Deadline")
@@ -149,6 +148,38 @@ namespace AsmAppDev.Migrations
                             Title = "Back-end Developer",
                             requiredQualification = "IT degree"
                         });
+                });
+
+            modelBuilder.Entity("AsmAppDev.Models.JobSeeker", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CV")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Introduction")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JobSeekers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -357,7 +388,7 @@ namespace AsmAppDev.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("AppDevGCD1104.Models.ApplicationUser", b =>
+            modelBuilder.Entity("AsmAppDev.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
@@ -379,7 +410,7 @@ namespace AsmAppDev.Migrations
 
             modelBuilder.Entity("AsmAppDev.Models.Category", b =>
                 {
-                    b.HasOne("AppDevGCD1104.Models.ApplicationUser", "ApplicationUser")
+                    b.HasOne("AsmAppDev.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

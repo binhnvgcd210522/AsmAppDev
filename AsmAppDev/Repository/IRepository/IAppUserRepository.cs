@@ -1,5 +1,4 @@
 ﻿using AsmAppDev.Models;
-using AsmAppDev.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AsmAppDev.Repository.IRepository

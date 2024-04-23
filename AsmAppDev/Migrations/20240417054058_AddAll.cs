@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AsmAppDev.Migrations
 {
     /// <inheritdoc />
-    public partial class AddAllTables : Migration
+    public partial class AddAll : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -55,21 +55,6 @@ namespace AsmAppDev.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Categories",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateCreate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Availability = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -179,6 +164,27 @@ namespace AsmAppDev.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateCreate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Availability = table.Column<bool>(type: "bit", nullable: false),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Categories_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Jobs",
                 columns: table => new
                 {
@@ -203,13 +209,13 @@ namespace AsmAppDev.Migrations
 
             migrationBuilder.InsertData(
                 table: "Categories",
-                columns: new[] { "Id", "Availability", "DateCreate", "Name" },
+                columns: new[] { "Id", "ApplicationUserId", "Availability", "DateCreate", "Name" },
                 values: new object[,]
                 {
-                    { 1, true, new DateTime(2024, 10, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), "Business" },
-                    { 2, true, new DateTime(2024, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), "Information Technology" },
-                    { 3, true, new DateTime(2024, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sale" },
-                    { 4, true, new DateTime(2024, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Finance" }
+                    { 1, null, true, new DateTime(2024, 10, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), "Business" },
+                    { 2, null, true, new DateTime(2024, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), "Information Technology" },
+                    { 3, null, true, new DateTime(2024, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sale" },
+                    { 4, null, true, new DateTime(2024, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Finance" }
                 });
 
             migrationBuilder.InsertData(
@@ -262,6 +268,11 @@ namespace AsmAppDev.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Categories_ApplicationUserId",
+                table: "Categories",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Jobs_CategoryId",
                 table: "Jobs",
                 column: "CategoryId");
@@ -292,10 +303,10 @@ namespace AsmAppDev.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "AspNetUsers");
         }
     }
 }

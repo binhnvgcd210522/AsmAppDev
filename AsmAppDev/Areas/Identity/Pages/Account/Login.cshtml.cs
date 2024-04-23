@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using AsmAppDev.Data;
 
 namespace AsmAppDev.Areas.Identity.Pages.Account
 {
@@ -21,9 +23,11 @@ namespace AsmAppDev.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly ApplicationDBContext _context;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, ApplicationDBContext context)
         {
+            _context = context;
             _signInManager = signInManager;
             _logger = logger;
         }
@@ -82,6 +86,7 @@ namespace AsmAppDev.Areas.Identity.Pages.Account
             /// </summary>
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
+            public bool Status { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -109,6 +114,13 @@ namespace AsmAppDev.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+                var user = await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Email == Input.Email); // Lấy thông tin người dùng từ DB
+
+                if (!user.Status)
+                {
+                    ModelState.AddModelError(string.Empty, "Cannot login account. User status is inactive.");
+                    return Page();
+                }
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);

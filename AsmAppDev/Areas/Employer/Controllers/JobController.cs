@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace AsmAppDev.Areas.Users.Controllers
 {
     [Area("Employer")]
-    public class JobController : Controller
+    public class ViewJobController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        public JobController(IUnitOfWork unitOfWork)
+        public ViewJobController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -17,7 +17,7 @@ namespace AsmAppDev.Areas.Users.Controllers
         {
             List<Job> myList = _unitOfWork.JobRepository.GetAll("Category").ToList();
             return View(myList);
-        }
+        } 
         public IActionResult Create()
         {
             JobVM jobVM = new JobVM()
@@ -62,17 +62,17 @@ namespace AsmAppDev.Areas.Users.Controllers
             return View(jobVM);
         }
         [HttpPost]
-        public IActionResult Edit(JobVM bookVM)
+        public IActionResult Edit(JobVM jobVM)
         {
 
             if (ModelState.IsValid)
             {
-                _unitOfWork.JobRepository.Update(bookVM.Job);
+                _unitOfWork.JobRepository.Update(jobVM.Job);
                 _unitOfWork.JobRepository.Save();
                 TempData["success"] = "Job edited successfully";
                 return RedirectToAction("Index");
             }
-            return View(bookVM);
+            return View(jobVM);
         }
         public IActionResult Delete(int? id)
         {
