@@ -7,17 +7,14 @@ namespace AsmAppDev.Models
     public class JobApplication 
     {
         public int Id { get; set; }
-        [ValidateNever]
-        public string UserId { get; set; }
-        [ForeignKey(nameof(UserId))]
-
-        [ValidateNever]
-        public ApplicationUser JobSeeker { get; set; }
-
+        public string Email { get; set; }
+       
         [ValidateNever]
         public int JobId { get; set; }
         [ForeignKey(nameof(JobId))]
         [ValidateNever]
-        public Job Job { get; set; }       
+        public Job Job { get; set; }      
+        
+        public DateTime DayApply { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AsmAppDev.Models;
 using AsmAppDev.Models.ViewModels;
 using AsmAppDev.Repository.IRepository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AsmAppDev.Areas.JobSeeker.Controllers
@@ -9,20 +10,20 @@ namespace AsmAppDev.Areas.JobSeeker.Controllers
 	public class ProfileController : Controller
 	{
 		private readonly IUnitOfWork _unitOfWork;
-		public ProfileController(IUnitOfWork unitOfWork)
+        private readonly UserManager<IdentityUser> _userManager;
+        public ProfileController(UserManager<IdentityUser> userManager, IUnitOfWork unitOfWork)
 		{
-			_unitOfWork = unitOfWork;
+            _userManager = userManager;
+            _unitOfWork = unitOfWork;
 		}
 
-        public IActionResult Index(string? id)
+        public async Task<IActionResult> Index()
         {
-            
-
-            ApplicationUser? profile = _unitOfWork.AppUserRepository.Get(x => x.Id == id);
-            
+            var profile = await _userManager.GetUserAsync(User);
 
             return View(profile);
         }
+
 
         public IActionResult Edit(string? id)
         {

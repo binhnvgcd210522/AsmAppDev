@@ -5,6 +5,7 @@ using AsmAppDev.Repository.IRepository;
 using AsmAppDev.Repository;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using AsmAppDev.Utility;
+using AsmAppDev.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -27,8 +27,7 @@ namespace AsmAppDev.Data
 				new Category { Id = 4, Name = "Finance", DateCreate = new DateTime(2024, 10, 30), Availability = true, UserId = "da94d7cd-6ac4-4c5d-9195-289b8e8ce846" }
 			   );
 			modelBuilder.Entity<JobApplication>().HasData(
-				new JobApplication { Id = 9, JobId = 1, UserId = "9eb14563-29d9-4045-8167-9efdefa94604" },
-				new JobApplication { Id = 10, JobId = 2, UserId = "9eb14563-29d9-4045-8167-9efdefa94604" }
+				new JobApplication { Id = 9, JobId = 1, Email = "Seeker2@gmai.com" }
 				);
             modelBuilder.Entity<Job>().HasData(
 				new Job

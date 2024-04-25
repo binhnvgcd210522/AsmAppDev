@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AsmAppDev.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240422094346_test")]
-    partial class test
+    [Migration("20240425052948_FixJobApplication")]
+    partial class FixJobApplication
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,20 +158,30 @@ namespace AsmAppDev.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("DayApply")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("JobId")
                         .HasColumnType("int");
-
-                    b.Property<string>("JobSeekerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("JobId");
 
-                    b.HasIndex("JobSeekerId");
-
                     b.ToTable("JobApplications");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 9,
+                            DayApply = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "Seeker2@gmai.com",
+                            JobId = 1
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -439,15 +449,7 @@ namespace AsmAppDev.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AsmAppDev.Models.ApplicationUser", "JobSeeker")
-                        .WithMany()
-                        .HasForeignKey("JobSeekerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Job");
-
-                    b.Navigation("JobSeeker");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

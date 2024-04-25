@@ -1,4 +1,6 @@
-﻿@model AsmAppDev.Models.ApplicationUser
+﻿@using Microsoft.AspNetCore.Identity;
+@model AsmAppDev.Models.ApplicationUser
+@inject UserManager<IdentityUser> UserManager
 
 @{
     ViewData["Title"] = "User Profile";

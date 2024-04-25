@@ -155,18 +155,19 @@ namespace AsmAppDev.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("DayApply")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("JobId")
                         .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("JobId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("JobApplications");
 
@@ -174,14 +175,9 @@ namespace AsmAppDev.Migrations
                         new
                         {
                             Id = 9,
-                            JobId = 1,
-                            UserId = "9eb14563-29d9-4045-8167-9efdefa94604"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            JobId = 2,
-                            UserId = "9eb14563-29d9-4045-8167-9efdefa94604"
+                            DayApply = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "Seeker2@gmai.com",
+                            JobId = 1
                         });
                 });
 
@@ -450,15 +446,7 @@ namespace AsmAppDev.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AsmAppDev.Models.ApplicationUser", "JobSeeker")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Job");
-
-                    b.Navigation("JobSeeker");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
