@@ -41,7 +41,6 @@ namespace AsmAppDev.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -57,7 +56,7 @@ namespace AsmAppDev.Migrations
                             Availability = true,
                             DateCreate = new DateTime(2024, 10, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Business",
-                            UserId = "da94d7cd-6ac4-4c5d-9195-289b8e8ce846"
+                            UserId = "2ad614f8-4ce8-4204-873e-f7d8c53a5e19"
                         },
                         new
                         {
@@ -65,7 +64,7 @@ namespace AsmAppDev.Migrations
                             Availability = true,
                             DateCreate = new DateTime(2024, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Information Technology",
-                            UserId = "da94d7cd-6ac4-4c5d-9195-289b8e8ce846"
+                            UserId = "2ad614f8-4ce8-4204-873e-f7d8c53a5e19"
                         },
                         new
                         {
@@ -73,7 +72,7 @@ namespace AsmAppDev.Migrations
                             Availability = true,
                             DateCreate = new DateTime(2024, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Sale",
-                            UserId = "da94d7cd-6ac4-4c5d-9195-289b8e8ce846"
+                            UserId = "2ad614f8-4ce8-4204-873e-f7d8c53a5e19"
                         },
                         new
                         {
@@ -81,7 +80,7 @@ namespace AsmAppDev.Migrations
                             Availability = true,
                             DateCreate = new DateTime(2024, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Finance",
-                            UserId = "da94d7cd-6ac4-4c5d-9195-289b8e8ce846"
+                            UserId = "2ad614f8-4ce8-4204-873e-f7d8c53a5e19"
                         });
                 });
 
@@ -420,9 +419,7 @@ namespace AsmAppDev.Migrations
                 {
                     b.HasOne("AsmAppDev.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("ApplicationUser");
                 });

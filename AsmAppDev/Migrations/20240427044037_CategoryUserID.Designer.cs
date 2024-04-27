@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AsmAppDev.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240417054058_AddAll")]
-    partial class AddAll
+    [Migration("20240427044037_CategoryUserID")]
+    partial class CategoryUserID
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,9 +33,6 @@ namespace AsmAppDev.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<bool>("Availability")
                         .HasColumnType("bit");
 
@@ -46,9 +43,12 @@ namespace AsmAppDev.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Categories");
 
@@ -58,28 +58,32 @@ namespace AsmAppDev.Migrations
                             Id = 1,
                             Availability = true,
                             DateCreate = new DateTime(2024, 10, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Business"
+                            Name = "Business",
+                            UserId = "2ad614f8-4ce8-4204-873e-f7d8c53a5e19"
                         },
                         new
                         {
                             Id = 2,
                             Availability = true,
                             DateCreate = new DateTime(2024, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Information Technology"
+                            Name = "Information Technology",
+                            UserId = "2ad614f8-4ce8-4204-873e-f7d8c53a5e19"
                         },
                         new
                         {
                             Id = 3,
                             Availability = true,
                             DateCreate = new DateTime(2024, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Sale"
+                            Name = "Sale",
+                            UserId = "2ad614f8-4ce8-4204-873e-f7d8c53a5e19"
                         },
                         new
                         {
                             Id = 4,
                             Availability = true,
                             DateCreate = new DateTime(2024, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Finance"
+                            Name = "Finance",
+                            UserId = "2ad614f8-4ce8-4204-873e-f7d8c53a5e19"
                         });
                 });
 
@@ -142,6 +146,40 @@ namespace AsmAppDev.Migrations
                             Description = "Back-end engineering job with high salary",
                             Title = "Back-end Developer",
                             requiredQualification = "IT degree"
+                        });
+                });
+
+            modelBuilder.Entity("AsmAppDev.Models.JobApplication", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DayApply")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
+
+                    b.ToTable("JobApplications");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 9,
+                            DayApply = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "Seeker2@gmai.com",
+                            JobId = 1
                         });
                 });
 
@@ -358,7 +396,16 @@ namespace AsmAppDev.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CV")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Introduction")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -375,7 +422,7 @@ namespace AsmAppDev.Migrations
                 {
                     b.HasOne("AsmAppDev.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("UserId");
 
                     b.Navigation("ApplicationUser");
                 });
@@ -389,6 +436,17 @@ namespace AsmAppDev.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("AsmAppDev.Models.JobApplication", b =>
+                {
+                    b.HasOne("AsmAppDev.Models.Job", "Job")
+                        .WithMany()
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Job");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

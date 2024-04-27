@@ -20,9 +20,8 @@
 				<td>@Job.requiredQualification</td>
 				<td>@Job.Deadline</td>
 				<td>@Job.Category.Name</td>
-				<td></td>
 				<td>
-					<a asp-controller="Job" asp-action="Apply" asp-route-id="@Job.Id" class="btn btn-primary">Apply</a>					
+					<a asp-controller="ViewJob" asp-action="Apply" asp-route-id="@Job.Id" class="btn btn-primary">Apply</a>					
 				</td>
 			</tr>
 		}

@@ -43,8 +43,8 @@
                     }
                 </td>
                 <td>
-                    @* <button class="btn btn-danger delete-button" data-id="@user.Id">Delete</button> *@
-                    <a asp-controller="Users" asp-action="Delete" asp-route-id=@user.Id>Delete</a>
+                    @*<button class="btn btn-danger delete-button" data-id="@user.Id">Delete</button>*@
+                    <button asp-controller="Users" asp-action="Delete" asp-route-id=@user.Id>Delete</button>
                 </td>
             </tr>
         }

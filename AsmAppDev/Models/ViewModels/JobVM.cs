@@ -6,8 +6,11 @@ namespace AsmAppDev.Models.ViewModels
 {
     public class JobVM
     {
-        public Job Job { get; set; }
+        [ValidateNever]
+        public Job Job { get;  set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> Categories { get; set; }
+        [ValidateNever]
+        public JobApplication apply { get; set; }
     }
 }

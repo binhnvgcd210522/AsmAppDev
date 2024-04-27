@@ -7,6 +7,7 @@ namespace AsmAppDev.Repository.IRepository
         ICategoryRepository CategoryRepository { get; }
         IJobRepository JobRepository { get; }
         IAppUserRepository AppUserRepository { get; }
+        IJobApplicationRepository JobApplicationRepository { get; }
         void Save();
     }
 }

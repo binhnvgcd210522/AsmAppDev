@@ -1,5 +1,28 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model List<JobApplication>
+<partial name="_Notification" />
+<h1>Here is a list of Job Applied</h1>
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<td>Title</td>
+			<td>Description</td>
+			<td>Required Qualification</td>
+			<td>Deadline</td>
+			<td>Category</td>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var Job in Model)
+		{
+			<tr>
+				<td>@Job.JobId</td>
+				<td>@Job.Email</td>
+				
+				<td></td>
+				<td>
+					<a asp-controller="Job" asp-action="Apply" asp-route-id="@Job.Id" class="btn btn-primary">Apply</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

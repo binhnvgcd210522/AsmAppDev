@@ -20,7 +20,6 @@ namespace AsmAppDev.Areas.JobSeeker.Controllers
         public async Task<IActionResult> Index()
         {
             var profile = await _userManager.GetUserAsync(User);
-
             return View(profile);
         }
 

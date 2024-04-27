@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AsmAppDev.Migrations
 {
     /// <inheritdoc />
-    public partial class AddAll : Migration
+    public partial class Alll : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,8 +35,11 @@ namespace AsmAppDev.Migrations
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Avatar = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Introduction = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: true),
+                    CV = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -55,6 +58,21 @@ namespace AsmAppDev.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateCreate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Availability = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -164,27 +182,6 @@ namespace AsmAppDev.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Categories",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateCreate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Availability = table.Column<bool>(type: "bit", nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Categories_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Jobs",
                 columns: table => new
                 {
@@ -207,15 +204,36 @@ namespace AsmAppDev.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "JobApplications",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    JobId = table.Column<int>(type: "int", nullable: false),
+                    DayApply = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobApplications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JobApplications_Jobs_JobId",
+                        column: x => x.JobId,
+                        principalTable: "Jobs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Categories",
-                columns: new[] { "Id", "ApplicationUserId", "Availability", "DateCreate", "Name" },
+                columns: new[] { "Id", "Availability", "DateCreate", "Name" },
                 values: new object[,]
                 {
-                    { 1, null, true, new DateTime(2024, 10, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), "Business" },
-                    { 2, null, true, new DateTime(2024, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), "Information Technology" },
-                    { 3, null, true, new DateTime(2024, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sale" },
-                    { 4, null, true, new DateTime(2024, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Finance" }
+                    { 1, true, new DateTime(2024, 10, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), "Business" },
+                    { 2, true, new DateTime(2024, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), "Information Technology" },
+                    { 3, true, new DateTime(2024, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sale" },
+                    { 4, true, new DateTime(2024, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Finance" }
                 });
 
             migrationBuilder.InsertData(
@@ -227,6 +245,11 @@ namespace AsmAppDev.Migrations
                     { 2, 3, new DateTime(2024, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "Driving", "Grab", "Drive License" },
                     { 3, 2, new DateTime(2024, 7, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Back-end engineering job with high salary", "Back-end Developer", "IT degree" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "JobApplications",
+                columns: new[] { "Id", "DayApply", "Email", "JobId" },
+                values: new object[] { 9, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seeker2@gmai.com", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -268,9 +291,9 @@ namespace AsmAppDev.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Categories_ApplicationUserId",
-                table: "Categories",
-                column: "ApplicationUserId");
+                name: "IX_JobApplications_JobId",
+                table: "JobApplications",
+                column: "JobId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Jobs_CategoryId",
@@ -297,16 +320,19 @@ namespace AsmAppDev.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Jobs");
+                name: "JobApplications");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Jobs");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }

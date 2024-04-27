@@ -1,6 +1,7 @@
 ﻿using AsmAppDev.Models;
 using AsmAppDev.Models.ViewModels;
 using AsmAppDev.Repository.IRepository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AsmAppDev.Areas.JobSeeker.Controllers
@@ -9,39 +10,62 @@ namespace AsmAppDev.Areas.JobSeeker.Controllers
     public class ViewJobController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        public ViewJobController(IUnitOfWork unitOfWork)
+        private readonly UserManager<IdentityUser> _userManager;
+
+        public ViewJobController(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager)
         {
             _unitOfWork = unitOfWork;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
             List<Job> myList = _unitOfWork.JobRepository.GetAll("Category").ToList();
             return View(myList);
         }
-        /*public IActionResult Apply()
+        public IActionResult Apply(int? Id)
         {
-            JobVM jobVM = new JobVM()
+            
+            if (Id == null) 
+            { 
+                return NotFound();
+            }
+            Job? job = _unitOfWork.JobRepository.Get(c=>c.Id == Id);
+            if (job == null)
             {
-                Categories = _unitOfWork.CategoryRepository.GetAll().Select(c => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem()
-                {
-                    Text = c.Name,
-                    Value = c.Id.ToString(),
-                }),
-                Job = new Job()
-            };
-            return View(jobVM);
+                return NotFound();
+            }
+            JobVM JobVm = new JobVM();
+            JobVm.apply = new JobApplication();
+            JobVm.apply.JobId = job.Id;
+            JobVm.Job = job;
+            
+            return View(JobVm);
         }
         [HttpPost]
-        public IActionResult Apply(JobVM jobVM)
+        public async Task<IActionResult> Apply(JobVM job)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.JobRepository.Add(jobVM.Job);
-                _unitOfWork.JobRepository.Save();
-                TempData["success"] = "Job created successfully";
+                // Lấy thông tin người dùng hiện tại từ UserManager
+                var currentUser = await _userManager.GetUserAsync(User);
+                job.apply.Email = currentUser.Email;
+                if (currentUser == null)
+                {
+                    // Xử lý trường hợp người dùng không tồn tại
+                    return RedirectToAction("Login", "Account");
+                }
+
+                // Tạo một đối tượng JobApplication mới và gán thông tin từ form
+
+                // Lưu đối tượng JobApplication vào cơ sở dữ liệu
+                _unitOfWork.JobApplicationRepository.Add(job.apply);
+                _unitOfWork.Save();
+
+                TempData["success"] = "Job applied successfully";
                 return RedirectToAction("Index");
             }
-            return View(jobVM);
-        }*/
+            return View(job);
+        }
+
     }
 }

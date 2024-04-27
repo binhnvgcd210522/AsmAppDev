@@ -21,15 +21,15 @@ namespace AsmAppDev.Data
 		{
 			base.OnModelCreating(modelBuilder);
 			modelBuilder.Entity<Category>().HasData(
-				new Category { Id = 1, Name = "Business", DateCreate = new DateTime(2024, 10, 27), Availability = true, UserId = "da94d7cd-6ac4-4c5d-9195-289b8e8ce846" },
-				new Category { Id = 2, Name = "Information Technology", DateCreate = new DateTime(2024, 10, 28), Availability = true, UserId = "da94d7cd-6ac4-4c5d-9195-289b8e8ce846" },
-				new Category { Id = 3, Name = "Sale", DateCreate = new DateTime(2024, 10, 29), Availability = true, UserId = "da94d7cd-6ac4-4c5d-9195-289b8e8ce846" },
-				new Category { Id = 4, Name = "Finance", DateCreate = new DateTime(2024, 10, 30), Availability = true, UserId = "da94d7cd-6ac4-4c5d-9195-289b8e8ce846" }
+				new Category { Id = 1, Name = "Business", DateCreate = new DateTime(2024, 10, 27), Availability = true, UserId = "2ad614f8-4ce8-4204-873e-f7d8c53a5e19" },
+				new Category { Id = 2, Name = "Information Technology", DateCreate = new DateTime(2024, 10, 28), Availability = true, UserId = "2ad614f8-4ce8-4204-873e-f7d8c53a5e19" },
+				new Category { Id = 3, Name = "Sale", DateCreate = new DateTime(2024, 10, 29), Availability = true, UserId = "2ad614f8-4ce8-4204-873e-f7d8c53a5e19" },
+				new Category { Id = 4, Name = "Finance", DateCreate = new DateTime(2024, 10, 30), Availability = true, UserId = "2ad614f8-4ce8-4204-873e-f7d8c53a5e19" }
 			   );
 			modelBuilder.Entity<JobApplication>().HasData(
 				new JobApplication { Id = 9, JobId = 1, Email = "Seeker2@gmai.com" }
 				);
-            modelBuilder.Entity<Job>().HasData(
+			modelBuilder.Entity<Job>().HasData(
 				new Job
 				{
 					Id = 1,
@@ -58,7 +58,8 @@ namespace AsmAppDev.Data
 					CategoryId = 2
 				}
 			);
-
 		}
+
+
 	}
 }

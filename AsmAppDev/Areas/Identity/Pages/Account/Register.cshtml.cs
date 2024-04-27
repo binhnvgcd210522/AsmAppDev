@@ -126,7 +126,7 @@ namespace AsmAppDev.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-                _userManager.AddToRoleAsync(user, "Admin").GetAwaiter().GetResult();
+                _userManager.AddToRoleAsync(user, "JobSeeker").GetAwaiter().GetResult();
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 user.Name = Input.Name;
