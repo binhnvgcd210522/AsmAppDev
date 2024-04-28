@@ -1,0 +1,26 @@
+﻿@model List<JobApplication>
+@*<partial name="_Notification" />*@
+<h1>Here is a list of Job Application</h1>
+    <table class = "table table-bordered">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Day Apply</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var jobApplication in Model)
+            {
+                <tr>
+                    <td>@jobApplication.Email</td>
+                    <td>@jobApplication.DayApply</td>
+                    <td>
+                        <a asp-action="ViewProfile" asp-route-id="@jobApplication.Id" class="btn btn-primary">View Profile</a>
+                        @*<a asp-action="AcceptCV" asp-route-id="@jobApplication.Id" class="btn btn-primary">View Profile</a>
+                        <a asp-action="ViewProfile" asp-route-id="@jobApplication.Id" class="btn btn-primary">View Profile</a>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

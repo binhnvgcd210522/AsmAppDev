@@ -1,0 +1,29 @@
+﻿@model List<Job>
+<partial name="_Notification" />
+<h1>Here is a list of Job</h1>
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<td>Title</td>
+			<td>Description</td>
+			<td>Required Qualification</td>
+			<td>Deadline</td>
+			<td>Category</td>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var Job in Model)
+		{
+			<tr>
+				<td>@Job.Title</td>
+				<td>@Job.Description</td>
+				<td>@Job.requiredQualification</td>
+				<td>@Job.Deadline</td>
+				<td>@Job.Category.Name</td>
+				<td>
+					<a asp-controller="ViewJob" asp-action="Apply" asp-route-id="@Job.Id" class="btn btn-primary">Apply</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

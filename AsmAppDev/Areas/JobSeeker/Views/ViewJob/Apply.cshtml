@@ -1,0 +1,28 @@
+﻿@model JobVM
+<h1>Apply to job</h1>
+<form method="post">
+    <input hidden asp-for="apply.JobId" />
+    <div class="border p-3 mt-4">
+        <div class="mb-3 row">
+            <label asp-for="Job.Title"></label>
+            <input asp-for="Job.Title" disabled>
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="Job.Description"></label>
+            <input asp-for="Job.Description" disabled>
+
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="Job.requiredQualification">Required Qualification</label>
+            <input asp-for="Job.requiredQualification" disabled>
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="Job.Deadline"></label>
+            <input asp-for="Job.Deadline" disabled>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Apply</button>
+        <a asp-controller="ViewJob" asp-action="Index" class="btn btn-primary">Back to List</a>
+    </div>
+</form>

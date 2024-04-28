@@ -1,0 +1,39 @@
+﻿@* @page
+@model DeleteAccountE
+@{
+    ViewData["Title"] = "DeleteAccountE";
+} *@
+
+@* <h1>@ViewData["Title"]</h1> *@
+@* <h2>Delete a new Account</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <form id="deleteEmployer" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="form-floating mb-3">
+                <label asp-for="View.Email"></label>
+                <input asp-for="View.Email" class="form-control" disabled />
+            </div>
+            <div class="form-floating mb-3">
+                <label asp-for="View.Name"></label>
+                <input asp-for="View.Name" class="form-control" disabled />
+            </div>
+            <div class="form-floating mb-3">
+                <label asp-for="View.Address"></label>
+                <input asp-for="View.Address" class="form-control" disabled />
+            </div>
+            <div class="form-floating mb-3">
+                <label asp-for="View.City"></label>
+                <input asp-for="View.City" class="form-control" disabled />
+            </div>
+            <button id="deleteSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Delete</button>
+        </form>
+    </div>
+</div> *@
+
+
+@* @section Scripts {
+    <partial name="_ValidationScriptsPartial" /> 
+} *@
