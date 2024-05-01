@@ -18,6 +18,8 @@ namespace AsmAppDev.Models
 		public Job Job { get; set; }
 
 		public DateTime DayApply { get; set; }
+		[ValidateNever]
+		public bool Status { get; set; }
 	}
 }
 

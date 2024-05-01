@@ -29,16 +29,19 @@ namespace AsmAppDev.Areas.JobSeeker.Controllers
             {
                 return NotFound();
             }
+
             ApplicationUser? jobSeeker = _unitOfWork.AppUserRepository.Get(x => x.Id == id);
             if (jobSeeker == null)
             {
                 return NotFound();
             }
+
             return View(jobSeeker);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(string id, [Bind("Id,Name,Address,Email,Introduction,Avatar,CV")] ApplicationUser jobSeeker, IFormFile avatarFile, IFormFile cvFile)
+        public async Task<IActionResult> Edit(string id, ApplicationUser jobSeeker, IFormFile? avatarFile, IFormFile? cvFile)
         {
             if (id != jobSeeker.Id)
             {
@@ -49,12 +52,18 @@ namespace AsmAppDev.Areas.JobSeeker.Controllers
             {
                 try
                 {
+                    ApplicationUser user = (ApplicationUser)await _userManager.FindByIdAsync(id);
+                    user.Name = jobSeeker.Name;
+                    user.Address = jobSeeker.Address;
+                    user.Introduction = jobSeeker.Introduction;
+
                     string wwwrootPath = _webHostEnvironment.WebRootPath;
+
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(avatarFile.FileName);
+                    string avatarPath = Path.Combine(wwwrootPath, @"img\avatars");
                     // Lưu avatar mới nếu có
                     if (avatarFile != null)
                     {
-                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(avatarFile.FileName);
-                        string avatarPath = Path.Combine(wwwrootPath, @"img\avatars");
                         // Delete Old Images
                         if (!string.IsNullOrEmpty(jobSeeker.Avatar))
                         {
@@ -65,51 +74,70 @@ namespace AsmAppDev.Areas.JobSeeker.Controllers
                             }
                         }
                         // Copy File to \img\avatars
-                        using (var fileStream = new FileStream(Path.Combine(wwwrootPath, fileName), FileMode.Create))
+                        using (var fileStream = new FileStream(Path.Combine(avatarPath, fileName), FileMode.Create))
                         {
                             avatarFile.CopyTo(fileStream);
                         }
                         // Update ImageUrl in DB
-                        jobSeeker.Avatar = @"\img\avatars\" + fileName;
+                        user.Avatar = @"\img\avatars\" + fileName;
+                    }
+                    else
+                    {
+                        // Copy File to \img\avatars
+                        using (var fileStream = new FileStream(Path.Combine(avatarPath, fileName), FileMode.Create))
+                        {
+                            avatarFile.CopyTo(fileStream);
+                        }
+                        // Update ImageUrl in DB
+                        user.Avatar = @"\img\avatars\" + fileName;
                     }
 
+                    string cvFileName = Guid.NewGuid().ToString() + Path.GetExtension(cvFile.FileName);
+                    string cvPath = Path.Combine(wwwrootPath, @"img\cv");
                     // Lưu CV mới nếu có
                     if (cvFile != null)
                     {
-                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(cvFile.FileName);
-                        string avatarPath = Path.Combine(wwwrootPath, @"img\cv");
-                        // Delete Old Images
+                        // Delete Old CV
                         if (!string.IsNullOrEmpty(jobSeeker.CV))
                         {
-                            var oldImagePath = Path.Combine(wwwrootPath, jobSeeker.CV.TrimStart('\\'));
-                            if (System.IO.File.Exists(oldImagePath))
+                            var oldCVPath = Path.Combine(wwwrootPath, jobSeeker.CV.TrimStart('\\'));
+                            if (System.IO.File.Exists(oldCVPath))
                             {
-                                System.IO.File.Delete(oldImagePath);
+                                System.IO.File.Delete(oldCVPath);
                             }
                         }
-                        // Copy File to \img\avatars
-                        using (var fileStream = new FileStream(Path.Combine(wwwrootPath, fileName), FileMode.Create))
+                        // Copy File to \img\cv
+                        using (var fileStream = new FileStream(Path.Combine(cvPath, cvFileName), FileMode.Create))
                         {
                             cvFile.CopyTo(fileStream);
                         }
                         // Update ImageUrl in DB
-                        jobSeeker.CV = @"\img\avatars\" + fileName;
+                        user.CV = @"\img\cv\" + cvFileName;
+                    }
+                    else
+                    {
+                        // Copy File to \img\cv
+                        using (var fileStream = new FileStream(Path.Combine(cvPath, cvFileName), FileMode.Create))
+                        {
+                            cvFile.CopyTo(fileStream);
+                        }
+                        // Update ImageUrl in DB
+                        user.CV = @"\img\cv\" + cvFileName;
                     }
 
+
                     // Cập nhật thông tin người dùng trong cơ sở dữ liệu
-                    _unitOfWork.AppUserRepository.Update(jobSeeker);
-                    _unitOfWork.AppUserRepository.Save();
+                    _unitOfWork.AppUserRepository.Update(user);
+                    _unitOfWork.Save();
                     TempData["success"] = "Profile edited successfully";
                     return RedirectToAction("Index");
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    // Xử lý ngoại lệ
-                    ModelState.AddModelError("", "An error occurred while updating the user profile.");
-                    // Ghi log ngoại lệ vào file log
+                    // Handle exception
+                    throw;
                 }
             }
-
             return View(jobSeeker);
         }
     }

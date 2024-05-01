@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace AsmAppDev.Models
 {
@@ -12,5 +13,6 @@ namespace AsmAppDev.Models
         public string? City { get; set; }
         public bool Status { get; set; }
         public string? CV { get; set; }
+        
     }
 }

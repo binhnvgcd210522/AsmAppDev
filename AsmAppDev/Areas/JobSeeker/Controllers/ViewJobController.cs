@@ -58,6 +58,12 @@ namespace AsmAppDev.Areas.JobSeeker.Controllers
                 // Gán email của người dùng hiện tại vào đối tượng JobApplication
                 job.apply.Email = currentUser.Email;
 
+                // Lấy ngày giờ hiện tại
+                DateTime currentDate = DateTime.Now;
+
+                // Gán ngày giờ hiện tại vào trường DayApply của đối tượng JobApplication
+                job.apply.DayApply = currentDate;
+  
                 // Lưu đối tượng JobApplication vào cơ sở dữ liệu
                 _unitOfWork.JobApplicationRepository.Add(job.apply);
                 _unitOfWork.Save();

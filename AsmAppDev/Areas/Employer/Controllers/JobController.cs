@@ -4,6 +4,7 @@ using AsmAppDev.Repository.IRepository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Claims;
@@ -119,16 +120,56 @@ namespace AsmAppDev.Areas.Users.Controllers
             TempData["success"] = "Job deleted successfully";
             return RedirectToAction("Index");
         }
-        public IActionResult ViewJobApp(int? id)
-        {
-            if (id == null || id == 0)
+		public IActionResult ViewJobApp(int? id, string sortBy, string filterBy)
+		{
+			if (id == null || id == 0)
+			{
+				return NotFound();
+			}
+
+			// Lọc dữ liệu
+			Expression<Func<JobApplication, bool>> filter = j => j.JobId == id;
+			var jobApps = _unitOfWork.JobApplicationRepository.GetAllJobApp(filter);
+
+			// Sắp xếp dữ liệu
+			if (!string.IsNullOrEmpty(sortBy))
+			{
+				switch (sortBy)
+				{
+					case "email":
+						jobApps = jobApps.OrderBy(j => j.Email);
+						break;
+					case "emailDesc":
+						jobApps = jobApps.OrderByDescending(j => j.Email);
+						break;
+                    case "dayApply":
+                        jobApps = jobApps.OrderBy(j => j.DayApply); // Sắp xếp theo ngày áp dụng giảm dần
+                        break;
+                    case "dayApplyDesc":
+                        jobApps = jobApps.OrderByDescending(j => j.DayApply); // Sắp xếp theo ngày áp dụng giảm dần
+                        break;
+                }
+			}
+
+            // Lọc dữ liệu nếu filterBy không rỗng
+            if (!string.IsNullOrEmpty(filterBy))
             {
-                return NotFound();
+                // Lọc theo Email
+                jobApps = jobApps.Where(j => j.Email.Contains(filterBy));
+
+                /*// Chuyển đổi chuỗi nhập vào thành định dạng "dd/MM/yyyy" để so sánh với DayApply
+                DateTime filterDate;
+                if (DateTime.TryParseExact(filterBy, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out filterDate))
+                {
+                    string filterDateStr = filterDate.ToString("dd/MM/yyyy");
+
+                    // Lọc theo DayApply
+                    jobApps = jobApps.Where(j => j.DayApply.ToString("dd/MM/yyyy").StartsWith(filterDateStr));
+                }*/
             }
-            Expression<Func<JobApplication, bool>> filter = j => j.JobId == id;
-            var jobApps = _unitOfWork.JobApplicationRepository.GetAllJobApp(filter);
+
             return View(jobApps);
-        }
+		}
         public async Task<IActionResult> ViewProfile(int? id)
         {
             if (id == null)
@@ -136,60 +177,38 @@ namespace AsmAppDev.Areas.Users.Controllers
                 return NotFound();
             }
 
-            // Lấy thông tin của JobApplication dựa trên id
             var jobApplication = _unitOfWork.JobApplicationRepository.Get(c => c.Id == id);
             if (jobApplication == null)
             {
                 return NotFound();
             }
 
-            // Lấy thông tin của người dùng (ApplicationUser) dựa trên email của JobApplication
             var jobSeeker = await _userManager.FindByEmailAsync(jobApplication.Email);
             if (jobSeeker == null)
             {
                 return NotFound();
             }
 
-            // Trả về view với thông tin của người dùng
             return View(jobSeeker);
         }
-        public async Task<IActionResult> Accept(string id)
+
+        public IActionResult Accept(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            // Lấy thông tin của người dùng dựa trên id
-            var user = await _userManager.FindByIdAsync(id);
-            if (user == null)
+            var jobApp = _unitOfWork.JobApplicationRepository.Get(c => c.Id == id);
+            if (jobApp == null)
             {
                 return NotFound();
             }
 
-            // Thực hiện logic chấp nhận yêu cầu ở đây (ví dụ: đánh dấu user đã được chấp nhận)
+            jobApp.Status = true;
+            _unitOfWork.JobApplicationRepository.Update(jobApp);
+            _unitOfWork.Save(); // Lưu thay đổi vào cơ sở dữ liệu
 
-            // Chuyển hướng đến trang index sau khi chấp nhận
-            return RedirectToAction("Index");
-        }
-
-        public async Task<IActionResult> Decline(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            // Lấy thông tin của người dùng dựa trên id
-            var user = await _userManager.FindByIdAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            // Thực hiện logic từ chối yêu cầu ở đây (ví dụ: xóa user khỏi hệ thống)
-
-            // Chuyển hướng đến trang index sau khi từ chối
             return RedirectToAction("Index");
         }
     }

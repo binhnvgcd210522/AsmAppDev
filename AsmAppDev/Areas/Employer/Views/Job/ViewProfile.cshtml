@@ -1,13 +1,26 @@
-﻿@model AsmAppDev.Models.ApplicationUser
+﻿@using Microsoft.AspNetCore.Identity
+@model AsmAppDev.Models.ApplicationUser
+@inject UserManager<IdentityUser> UserManager
+
 @{
     ViewData["Title"] = "User Profile";
 }
+
 <h1>User Profile</h1>
 
 <div>
     <dl class="row">
         <dt class="col-sm-3">Avatar</dt>
-        <dd class="col-sm-9">@Model.Avatar</dd>
+        <dd class="col-sm-9">
+            @if (!string.IsNullOrEmpty(Model.Avatar))
+            {
+                <img src="@Model.Avatar" alt="Avatar" class="img-thumbnail" style="max-width: 200px; max-height: 200px;" />
+            }
+            else
+            {
+                <span>No avatar available</span>
+            }
+        </dd>
 
         <dt class="col-sm-3">Name</dt>
         <dd class="col-sm-9">@Model.Name</dd>
@@ -15,19 +28,28 @@
         <dt class="col-sm-3">Introduction</dt>
         <dd class="col-sm-9">@Model.Introduction</dd>
 
-
         <dt class="col-sm-3">Address</dt>
         <dd class="col-sm-9">@Model.Address</dd>
-
 
         <dt class="col-sm-3">City</dt>
         <dd class="col-sm-9">@Model.City</dd>
 
         <dt class="col-sm-3">CV</dt>
-        <dd class="col-sm-9">@Model.CV</dd>
+        <dd class="col-sm-9">
+            @if (!string.IsNullOrEmpty(Model.CV))
+            {
+                <a href="@Model.CV" target="_blank">@Model.CV</a>
+            }
+            else
+            {
+                <span>No CV uploaded</span>
+            }
+        </dd>
+        <dd></dd>
     </dl>
 </div>
+
 <div class="form-group">
-    <a asp-action="Accept" asp-route-id="@Model.Id" class="btn btn-primary">Accept</a>
-    <a asp-action="Decline" asp-route-id="@Model.Id" class="btn btn-primary">Decline</a>
+    <a asp-controller="Employer" asp-action="Accept" asp-route-id="@Model.Id" class="btn btn-danger">Acccept</a>
+    <a asp-controller="Employer" asp-action="Decline" asp-route-id="@Model.Id" class="btn btn-danger">Decline</a>
 </div>

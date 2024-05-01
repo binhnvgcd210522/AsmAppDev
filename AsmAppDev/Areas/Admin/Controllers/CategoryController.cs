@@ -44,52 +44,6 @@ namespace AsmAppDev.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        /*public IActionResult Create()
-        {
-            return View();
-        }
-        [HttpPost]
-        public IActionResult Create(Category category)
-        {
-            if (category.Name == category.Description)
-            {
-                ModelState.AddModelError("Description", "Description must be different than Name");
-            }
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.CategoryRepository.Add(category);
-                _unitOfWork.Save();
-                TempData["success"] = "Category created successfully";
-                return RedirectToAction("Index");
-            }
-            return View();
-        }
-        public IActionResult Edit(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            Category? category = _unitOfWork.CategoryRepository.Get(c => c.Id == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-            return View(category);
-        }
-        [HttpPost]
-        public IActionResult Edit(Category category)
-        {
-
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.CategoryRepository.Update(category);
-                _unitOfWork.CategoryRepository.Save();
-                TempData["success"] = "Category edited successfully";
-                return RedirectToAction("Index");
-            }
-            return View();
-        }*/
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)

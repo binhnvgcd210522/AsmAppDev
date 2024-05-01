@@ -14,7 +14,7 @@ namespace AsmAppDev.Areas.JobSeeker.Controllers
         }
         public IActionResult Index()
         {
-            List<JobApplication> myList = _unitOfWork.JobApplicationRepository.GetAll().ToList();
+            List<JobApplication> myList = _unitOfWork.JobApplicationRepository.GetAll("JobApplication").ToList();
             return View(myList);
         }
     }

@@ -25,13 +25,6 @@ namespace AsmAppDev.Models
 
         [ValidateNever]
         public ApplicationUser ApplicationUser { get; set; }
-
-        /*[ValidateNever]
-        public int JobAppId { get; set; }
-        [ForeignKey(nameof(JobAppId))]
-
-        [ValidateNever]
-        public JobApplication JobApplication { get; set; }*/
 	}
 }
 

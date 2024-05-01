@@ -171,6 +171,9 @@ namespace AsmAppDev.Migrations
                     b.Property<int>("JobId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("JobId");
@@ -403,12 +406,17 @@ namespace AsmAppDev.Migrations
                     b.Property<string>("Introduction")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("JobApplicationId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
+
+                    b.HasIndex("JobApplicationId");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
@@ -499,6 +507,17 @@ namespace AsmAppDev.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("AsmAppDev.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("AsmAppDev.Models.JobApplication", "JobApplication")
+                        .WithMany()
+                        .HasForeignKey("JobApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("JobApplication");
                 });
 #pragma warning restore 612, 618
         }

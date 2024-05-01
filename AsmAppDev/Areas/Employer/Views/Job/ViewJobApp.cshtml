@@ -1,26 +1,53 @@
-﻿@model List<JobApplication>
-@*<partial name="_Notification" />*@
+﻿@model IEnumerable<AsmAppDev.Models.JobApplication>
 <h1>Here is a list of Job Application</h1>
-    <table class = "table table-bordered">
-        <thead>
+<!-- Form cho việc sắp xếp và lọc -->
+<form asp-action="ViewJobApp" method="get">
+    <div>
+        <label for="sortBy">Sort by:</label>
+        <select id="sortBy" name="sortBy">
+            <option value="email">Email (A-Z)</option>
+            <option value="emailDesc">Email (Z-A)</option>
+            <option value="dayApply">Day Apply (Low to High)</option>
+            <option value="dayApplyDesc">Day Apply (High to Low)</option>
+        </select>
+    </div>
+    <div>
+        <label for="filterBy">Filter by email:</label>
+        <input type="text" id="filterBy" name="filterBy">
+    </div>
+    <button type="submit" class="btn btn-primary">Apply Filters</button>
+</form>
+
+<script>
+    document.getElementById("sortBy").addEventListener("change", function () {
+        this.form.submit();
+    });
+</script>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Day Apply</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var jobApplication in Model)
+        {
             <tr>
-                <th>Email</th>
-                <th>Day Apply</th>
-                <th>Action</th>
+                <td>@jobApplication.Email</td>
+                <td>@jobApplication.DayApply.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>
+                    <a asp-action="ViewProfile" asp-route-id="@jobApplication.Id" class="btn btn-primary">View Profile</a>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var jobApplication in Model)
-            {
-                <tr>
-                    <td>@jobApplication.Email</td>
-                    <td>@jobApplication.DayApply</td>
-                    <td>
-                        <a asp-action="ViewProfile" asp-route-id="@jobApplication.Id" class="btn btn-primary">View Profile</a>
-                        @*<a asp-action="AcceptCV" asp-route-id="@jobApplication.Id" class="btn btn-primary">View Profile</a>
-                        <a asp-action="ViewProfile" asp-route-id="@jobApplication.Id" class="btn btn-primary">View Profile</a>*@
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
+
+<script>
+    document.getElementById("sortBy").addEventListener("change", function () {
+        this.form.submit();
+    });
+</script>
