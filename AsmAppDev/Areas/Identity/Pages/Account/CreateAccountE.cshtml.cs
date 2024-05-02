@@ -135,7 +135,7 @@ namespace AsmAppDev.Areas.Identity.Pages.Account
                 user.City = Input.City;
 
                 // Đặt giá trị mặc định cho trường Status
-                user.Status = true;
+                user.Status = false;
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
@@ -143,28 +143,20 @@ namespace AsmAppDev.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId, code, returnUrl },
-                        protocol: Request.Scheme);
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);  // Tạo token từ obj user được tạo ở trên
+                    var confirmResult = await _userManager.ConfirmEmailAsync(user, token);  // tạo obj confirmResult từ 2 tham số (user và token)
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    if (confirmResult.Succeeded)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl });
+                        _logger.LogInformation("The user's email has been confirmed.");
                     }
                     else
                     {
-                        // await _signInManager.SignInAsync(user, isPersistent: false);
-                        TempData["Success"] = "Account created successfully!!";
-                        return LocalRedirect(returnUrl);
+                        _logger.LogError("Email confirmation failed.");
                     }
+
+                    TempData["Success"] = "Account created successfully!!";
+                    return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)
                 {

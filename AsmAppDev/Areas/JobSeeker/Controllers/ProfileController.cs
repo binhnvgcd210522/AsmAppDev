@@ -58,73 +58,76 @@ namespace AsmAppDev.Areas.JobSeeker.Controllers
                     user.Introduction = jobSeeker.Introduction;
 
                     string wwwrootPath = _webHostEnvironment.WebRootPath;
-
-                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(avatarFile.FileName);
-                    string avatarPath = Path.Combine(wwwrootPath, @"img\avatars");
-                    // Lưu avatar mới nếu có
                     if (avatarFile != null)
                     {
-                        // Delete Old Images
-                        if (!string.IsNullOrEmpty(jobSeeker.Avatar))
+                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(avatarFile.FileName);
+                        string avatarPath = Path.Combine(wwwrootPath, @"img\avatars");
+                        // Lưu avatar mới nếu có
+                        if (avatarFile != null)
                         {
-                            var oldImagePath = Path.Combine(wwwrootPath, jobSeeker.Avatar.TrimStart('\\'));
-                            if (System.IO.File.Exists(oldImagePath))
+                            // Delete Old Images
+                            if (!string.IsNullOrEmpty(jobSeeker.Avatar))
                             {
-                                System.IO.File.Delete(oldImagePath);
+                                var oldImagePath = Path.Combine(wwwrootPath, jobSeeker.Avatar.TrimStart('\\'));
+                                if (System.IO.File.Exists(oldImagePath))
+                                {
+                                    System.IO.File.Delete(oldImagePath);
+                                }
                             }
+                            // Copy File to \img\avatars
+                            using (var fileStream = new FileStream(Path.Combine(avatarPath, fileName), FileMode.Create))
+                            {
+                                avatarFile.CopyTo(fileStream);
+                            }
+                            // Update ImageUrl in DB
+                            user.Avatar = @"\img\avatars\" + fileName;
                         }
-                        // Copy File to \img\avatars
-                        using (var fileStream = new FileStream(Path.Combine(avatarPath, fileName), FileMode.Create))
+                        else
                         {
-                            avatarFile.CopyTo(fileStream);
+                            // Copy File to \img\avatars
+                            using (var fileStream = new FileStream(Path.Combine(avatarPath, fileName), FileMode.Create))
+                            {
+                                avatarFile.CopyTo(fileStream);
+                            }
+                            // Update ImageUrl in DB
+                            user.Avatar = @"\img\avatars\" + fileName;
                         }
-                        // Update ImageUrl in DB
-                        user.Avatar = @"\img\avatars\" + fileName;
                     }
-                    else
-                    {
-                        // Copy File to \img\avatars
-                        using (var fileStream = new FileStream(Path.Combine(avatarPath, fileName), FileMode.Create))
-                        {
-                            avatarFile.CopyTo(fileStream);
-                        }
-                        // Update ImageUrl in DB
-                        user.Avatar = @"\img\avatars\" + fileName;
-                    }
-
-                    string cvFileName = Guid.NewGuid().ToString() + Path.GetExtension(cvFile.FileName);
-                    string cvPath = Path.Combine(wwwrootPath, @"img\cv");
-                    // Lưu CV mới nếu có
                     if (cvFile != null)
                     {
-                        // Delete Old CV
-                        if (!string.IsNullOrEmpty(jobSeeker.CV))
+                        string cvFileName = Guid.NewGuid().ToString() + Path.GetExtension(cvFile.FileName);
+                        string cvPath = Path.Combine(wwwrootPath, @"img\cv");
+                        // Lưu CV mới nếu có
+                        if (cvFile != null)
                         {
-                            var oldCVPath = Path.Combine(wwwrootPath, jobSeeker.CV.TrimStart('\\'));
-                            if (System.IO.File.Exists(oldCVPath))
+                            // Delete Old CV
+                            if (!string.IsNullOrEmpty(jobSeeker.CV))
                             {
-                                System.IO.File.Delete(oldCVPath);
+                                var oldCVPath = Path.Combine(wwwrootPath, jobSeeker.CV.TrimStart('\\'));
+                                if (System.IO.File.Exists(oldCVPath))
+                                {
+                                    System.IO.File.Delete(oldCVPath);
+                                }
                             }
+                            // Copy File to \img\cv
+                            using (var fileStream = new FileStream(Path.Combine(cvPath, cvFileName), FileMode.Create))
+                            {
+                                cvFile.CopyTo(fileStream);
+                            }
+                            // Update ImageUrl in DB
+                            user.CV = @"\img\cv\" + cvFileName;
                         }
-                        // Copy File to \img\cv
-                        using (var fileStream = new FileStream(Path.Combine(cvPath, cvFileName), FileMode.Create))
+                        else
                         {
-                            cvFile.CopyTo(fileStream);
+                            // Copy File to \img\cv
+                            using (var fileStream = new FileStream(Path.Combine(cvPath, cvFileName), FileMode.Create))
+                            {
+                                cvFile.CopyTo(fileStream);
+                            }
+                            // Update ImageUrl in DB
+                            user.CV = @"\img\cv\" + cvFileName;
                         }
-                        // Update ImageUrl in DB
-                        user.CV = @"\img\cv\" + cvFileName;
                     }
-                    else
-                    {
-                        // Copy File to \img\cv
-                        using (var fileStream = new FileStream(Path.Combine(cvPath, cvFileName), FileMode.Create))
-                        {
-                            cvFile.CopyTo(fileStream);
-                        }
-                        // Update ImageUrl in DB
-                        user.CV = @"\img\cv\" + cvFileName;
-                    }
-
 
                     // Cập nhật thông tin người dùng trong cơ sở dữ liệu
                     _unitOfWork.AppUserRepository.Update(user);

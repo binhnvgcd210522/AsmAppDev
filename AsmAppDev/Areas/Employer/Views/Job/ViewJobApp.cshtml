@@ -7,8 +7,8 @@
         <select id="sortBy" name="sortBy">
             <option value="email">Email (A-Z)</option>
             <option value="emailDesc">Email (Z-A)</option>
-            <option value="dayApply">Day Apply (Low to High)</option>
-            <option value="dayApplyDesc">Day Apply (High to Low)</option>
+            <option value="dayApply">Day Apply (Oldest)</option>
+            <option value="dayApplyDesc">Day Apply (Newest)</option>
         </select>
     </div>
     <div>
@@ -33,13 +33,16 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var jobApplication in Model)
+        @foreach (var jobApplication in Model.Where(j => !j.Status))
         {
             <tr>
                 <td>@jobApplication.Email</td>
                 <td>@jobApplication.DayApply.ToString("dd/MM/yyyy HH:mm")</td>
                 <td>
                     <a asp-action="ViewProfile" asp-route-id="@jobApplication.Id" class="btn btn-primary">View Profile</a>
+                    <a asp-action="Accept" asp-route-id="@jobApplication.Id" class="btn btn-danger">Acccept</a>
+                    <a asp-action="Decline" asp-route-id="@jobApplication.Id" class="btn btn-danger">Decline</a>
+
                 </td>
             </tr>
         }

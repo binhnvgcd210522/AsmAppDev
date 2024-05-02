@@ -1,16 +1,47 @@
 ﻿@model List<Category>
 <partial name="_Notification" />
-<h1>List of Category</h1>
+
+<head>
+    <style>
+        p {
+            margin: 0 auto;
+        }
+
+        thead {
+            background-color: #FFCC00;
+            text-align: center;
+        }
+
+        tbody {
+            text-align: center;
+        }
+
+        tbody tr:nth-child(odd) { /* odd: số lẻ, even: số chẳn */
+            background-color: #f2f2f2;
+        }
+
+        tbody tr td {
+            vertical-align: middle;
+        }
+
+        tbody tr .td-availability {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<h1>List of Categories waiting for approval</h1>
 
 <table class="table table-bordered">
-     <a asp-controller="Users" asp-action="Create" class="btn btn-success"><i class="bi bi-plus-lg"></i> Create New Account</a> 
+    @* <a asp-controller="Users" asp-action="Create" class="btn btn-success"><i class="bi bi-plus-lg"></i> Create New Account</a> *@
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Name</th>
+            <th>Name Category</th>
             <th>Date Create</th>
             <th>Availability</th>
-            <th>User</th>
+            <th>User Create</th>
             <th></th>
         </tr>
     </thead>
@@ -19,29 +50,28 @@
         // Phương thức Where sử dụng để lọc ra các obj Category trong Model có thuộc tính Availability là false
         {
             <tr>
-                <td>@category.Id</td>
-                <td>@category.Name</td>
+                <td style="font-weight: 600;">@category.Name</td>
                 <td>@category.DateCreate</td>
-                <td>
-                    @(category.Availability ? "Active" : "Inactive")
+                <td class="td-availability">
+                    @(category.Availability ? "Approve" : "Refuse")
                     @if (category.Availability)
                     {
                         <form asp-controller="Category" asp-action="ToggleAvailability" method="post">
                             <input type="hidden" name="id" value="@category.Id" />
-                            <button type="submit" class="btn btn-danger">Disable</button>
+                            <button type="submit" class="btn btn-outline-warning">Refuse</button>
                         </form>
                     }
                     else
                     {
                         <form asp-controller="Category" asp-action="ToggleAvailability" method="post">
                             <input type="hidden" name="id" value="@category.Id" />
-                            <button type="submit" class="btn btn-success">Enable</button>
+                            <button type="submit" class="btn btn-outline-primary">Approve</button>
                         </form>
                     }
                 </td>
-                <td>@category.ApplicationUser.Name</td>
+                <td style="font-weight: 700;">@category.ApplicationUser.Name</td>
                 <td>
-                    <a asp-controller="Category" asp-action="Delete" asp-route-id=@category.Id>Delete</a>
+                    <a class="btn btn-outline-danger" asp-controller="Category" asp-action="Delete" asp-route-id=@category.Id>Delete</a>
                 </td>
             </tr>
         }

@@ -1,17 +1,15 @@
 ﻿using AsmAppDev.Models;
+using AsmAppDev.Models.ViewModels;
 using AsmAppDev.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Security.Claims;
-using System;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace AsmAppDev.Areas.Users.Controllers
 {
     [Area("Employer")]
-    /*[Authorize(Roles = "Admin")]*/
+    [Authorize(Roles = "Employer")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -34,6 +32,30 @@ namespace AsmAppDev.Areas.Users.Controllers
             // Nếu không có userId, hoặc không tìm thấy categories, trả về View trống hoặc với danh sách rỗng
             return View(new List<Category>());
         }
+        public async Task<IActionResult> ToggleNotification(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Category? category = _unitOfWork.CategoryRepository.Get(c => c.Id == id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            category.NotificationStatus = !category.NotificationStatus;
+
+            /*if (category.NotificationStatus)
+            {
+                category.NotificationStatus = true;
+            }*/
+
+            _unitOfWork.Save();
+
+            TempData["Success"] = "Notification status delete successfully!";
+            return RedirectToAction("Index");
+        }
         public IActionResult Create()
         {
             return View();
@@ -46,7 +68,7 @@ namespace AsmAppDev.Areas.Users.Controllers
                 var claimIdentity = (ClaimsIdentity)User.Identity;
                 var userId = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-                if(userId != null)
+                if (userId != null)
                 {
                     category.UserId = userId;
                     category.DateCreate = DateTime.Now;
@@ -82,7 +104,9 @@ namespace AsmAppDev.Areas.Users.Controllers
 
                 if (userId != null)
                 {
+
                     category.UserId = userId;
+                    category.DateCreate = DateTime.Now;
                     _unitOfWork.CategoryRepository.Update(category);
                     _unitOfWork.CategoryRepository.Save();
                     TempData["success"] = "Category edited successfully";

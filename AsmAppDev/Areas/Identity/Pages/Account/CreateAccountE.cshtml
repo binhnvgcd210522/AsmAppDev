@@ -5,7 +5,10 @@
 }
 
 @* <h1>@ViewData["Title"]</h1> *@
-<h2>Create a new Account</h2>
+<div class="d-flex justify-content-between">
+    <h2>Create a Account Employer</h2>
+    <a asp-area="Admin" asp-controller="Users" asp-action="Index" class="h-100 btn btn-primary">Back To List</a>
+</div>
 
 <div class="row">
     <div class="col-md-12">
@@ -42,7 +45,7 @@
                 <label asp-for="Input.City">City</label>
                 <span asp-validation-for="Input.City" class="text-danger"></span>
             </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            <button id="registerSubmit" type="submit" class="w-10 btn btn-lg btn-primary">Register</button>
         </form>
     </div>
 

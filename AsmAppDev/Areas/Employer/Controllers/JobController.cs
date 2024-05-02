@@ -151,21 +151,11 @@ namespace AsmAppDev.Areas.Users.Controllers
                 }
 			}
 
-            // Lọc dữ liệu nếu filterBy không rỗng
+            // Search Email
             if (!string.IsNullOrEmpty(filterBy))
             {
                 // Lọc theo Email
                 jobApps = jobApps.Where(j => j.Email.Contains(filterBy));
-
-                /*// Chuyển đổi chuỗi nhập vào thành định dạng "dd/MM/yyyy" để so sánh với DayApply
-                DateTime filterDate;
-                if (DateTime.TryParseExact(filterBy, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out filterDate))
-                {
-                    string filterDateStr = filterDate.ToString("dd/MM/yyyy");
-
-                    // Lọc theo DayApply
-                    jobApps = jobApps.Where(j => j.DayApply.ToString("dd/MM/yyyy").StartsWith(filterDateStr));
-                }*/
             }
 
             return View(jobApps);
@@ -207,6 +197,23 @@ namespace AsmAppDev.Areas.Users.Controllers
 
             jobApp.Status = true;
             _unitOfWork.JobApplicationRepository.Update(jobApp);
+            _unitOfWork.Save(); // Lưu thay đổi vào cơ sở dữ liệu
+
+            return RedirectToAction("Index");
+        }
+        public IActionResult Decline(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var jobApp = _unitOfWork.JobApplicationRepository.Get(c => c.Id == id);
+            if (jobApp == null)
+            {
+                return NotFound();
+            }
+            _unitOfWork.JobApplicationRepository.Delete(jobApp);
             _unitOfWork.Save(); // Lưu thay đổi vào cơ sở dữ liệu
 
             return RedirectToAction("Index");

@@ -40,7 +40,11 @@ namespace AsmAppDev.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("NotificationStatus")
+                        .HasColumnType("bit");
+
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -56,6 +60,7 @@ namespace AsmAppDev.Migrations
                             Availability = true,
                             DateCreate = new DateTime(2024, 10, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Business",
+                            NotificationStatus = false,
                             UserId = "89bf0a61-e7cf-4efe-a7c8-83631a253554"
                         },
                         new
@@ -64,6 +69,7 @@ namespace AsmAppDev.Migrations
                             Availability = true,
                             DateCreate = new DateTime(2024, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Information Technology",
+                            NotificationStatus = false,
                             UserId = "89bf0a61-e7cf-4efe-a7c8-83631a253554"
                         },
                         new
@@ -72,6 +78,7 @@ namespace AsmAppDev.Migrations
                             Availability = true,
                             DateCreate = new DateTime(2024, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Sale",
+                            NotificationStatus = false,
                             UserId = "89bf0a61-e7cf-4efe-a7c8-83631a253554"
                         },
                         new
@@ -80,6 +87,7 @@ namespace AsmAppDev.Migrations
                             Availability = true,
                             DateCreate = new DateTime(2024, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Finance",
+                            NotificationStatus = false,
                             UserId = "89bf0a61-e7cf-4efe-a7c8-83631a253554"
                         });
                 });
@@ -406,17 +414,12 @@ namespace AsmAppDev.Migrations
                     b.Property<string>("Introduction")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("JobApplicationId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
-
-                    b.HasIndex("JobApplicationId");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
@@ -425,7 +428,9 @@ namespace AsmAppDev.Migrations
                 {
                     b.HasOne("AsmAppDev.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ApplicationUser");
                 });
@@ -507,17 +512,6 @@ namespace AsmAppDev.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("AsmAppDev.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("AsmAppDev.Models.JobApplication", "JobApplication")
-                        .WithMany()
-                        .HasForeignKey("JobApplicationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("JobApplication");
                 });
 #pragma warning restore 612, 618
         }

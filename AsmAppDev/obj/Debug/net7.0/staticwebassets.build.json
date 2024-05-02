@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "7HcTeLdaltJbF4Lg6Hfvimi9BfSOAzDw/qd6OonkQKs=",
+  "Hash": "bKNrMTpfEB7Ap4vQrOsODaWPkoYYrRtZjH9ok0suaW4=",
   "Source": "AsmAppDev",
   "BasePath": "_content/AsmAppDev",
   "Mode": "Default",
@@ -1122,6 +1122,40 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
+      "Identity": "D:\\Application Development\\AsmAppDev\\AsmAppDev\\wwwroot\\img\\avatars\\130d4a8e-631d-42cd-aebb-0400b38f221e.png",
+      "SourceId": "AsmAppDev",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Application Development\\AsmAppDev\\AsmAppDev\\wwwroot\\",
+      "BasePath": "_content/AsmAppDev",
+      "RelativePath": "img/avatars/130d4a8e-631d-42cd-aebb-0400b38f221e.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\avatars\\130d4a8e-631d-42cd-aebb-0400b38f221e.png"
+    },
+    {
+      "Identity": "D:\\Application Development\\AsmAppDev\\AsmAppDev\\wwwroot\\img\\avatars\\642094ad-9d1e-413f-b199-d3cf21000bb7.png",
+      "SourceId": "AsmAppDev",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Application Development\\AsmAppDev\\AsmAppDev\\wwwroot\\",
+      "BasePath": "_content/AsmAppDev",
+      "RelativePath": "img/avatars/642094ad-9d1e-413f-b199-d3cf21000bb7.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\avatars\\642094ad-9d1e-413f-b199-d3cf21000bb7.png"
+    },
+    {
       "Identity": "D:\\Application Development\\AsmAppDev\\AsmAppDev\\wwwroot\\img\\avatars\\67a35211-598a-40d7-bd20-ca561b613bbd.png",
       "SourceId": "AsmAppDev",
       "SourceType": "Discovered",
@@ -1137,6 +1171,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\avatars\\67a35211-598a-40d7-bd20-ca561b613bbd.png"
+    },
+    {
+      "Identity": "D:\\Application Development\\AsmAppDev\\AsmAppDev\\wwwroot\\img\\avatars\\74b04f95-663d-45e4-a1d0-5e7786f6ea41.gif",
+      "SourceId": "AsmAppDev",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Application Development\\AsmAppDev\\AsmAppDev\\wwwroot\\",
+      "BasePath": "_content/AsmAppDev",
+      "RelativePath": "img/avatars/74b04f95-663d-45e4-a1d0-5e7786f6ea41.gif",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\avatars\\74b04f95-663d-45e4-a1d0-5e7786f6ea41.gif"
     },
     {
       "Identity": "D:\\Application Development\\AsmAppDev\\AsmAppDev\\wwwroot\\img\\avatars\\8c15be5e-b261-4632-b283-be61dd9d4e9a.png",
@@ -1173,6 +1224,23 @@
       "OriginalItemSpec": "wwwroot\\img\\avatars\\adcc8652-dbc9-412c-932c-517abc052375.png"
     },
     {
+      "Identity": "D:\\Application Development\\AsmAppDev\\AsmAppDev\\wwwroot\\img\\cv\\064b84f4-4957-45f5-b99a-559b6eac4d11.pdf",
+      "SourceId": "AsmAppDev",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Application Development\\AsmAppDev\\AsmAppDev\\wwwroot\\",
+      "BasePath": "_content/AsmAppDev",
+      "RelativePath": "img/cv/064b84f4-4957-45f5-b99a-559b6eac4d11.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\cv\\064b84f4-4957-45f5-b99a-559b6eac4d11.pdf"
+    },
+    {
       "Identity": "D:\\Application Development\\AsmAppDev\\AsmAppDev\\wwwroot\\img\\cv\\29e46620-23e1-48d7-9300-91b33a3b247a.txt",
       "SourceId": "AsmAppDev",
       "SourceType": "Discovered",
@@ -1188,6 +1256,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\cv\\29e46620-23e1-48d7-9300-91b33a3b247a.txt"
+    },
+    {
+      "Identity": "D:\\Application Development\\AsmAppDev\\AsmAppDev\\wwwroot\\img\\cv\\3ba5e422-0aa9-4a73-af8e-9a21209fa3e8.pdf",
+      "SourceId": "AsmAppDev",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Application Development\\AsmAppDev\\AsmAppDev\\wwwroot\\",
+      "BasePath": "_content/AsmAppDev",
+      "RelativePath": "img/cv/3ba5e422-0aa9-4a73-af8e-9a21209fa3e8.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\cv\\3ba5e422-0aa9-4a73-af8e-9a21209fa3e8.pdf"
     },
     {
       "Identity": "D:\\Application Development\\AsmAppDev\\AsmAppDev\\wwwroot\\img\\cv\\7bc5ef0b-4c44-4ec3-b0da-174fc1e48e97.txt",
@@ -1256,6 +1341,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\cv\\cf86484f-ed4c-4f2a-8e95-b179752da521.docx"
+    },
+    {
+      "Identity": "D:\\Application Development\\AsmAppDev\\AsmAppDev\\wwwroot\\img\\cv\\fdfaa668-9a3a-4b0d-b5e5-5837f92c39e0.txt",
+      "SourceId": "AsmAppDev",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Application Development\\AsmAppDev\\AsmAppDev\\wwwroot\\",
+      "BasePath": "_content/AsmAppDev",
+      "RelativePath": "img/cv/fdfaa668-9a3a-4b0d-b5e5-5837f92c39e0.txt",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\cv\\fdfaa668-9a3a-4b0d-b5e5-5837f92c39e0.txt"
     },
     {
       "Identity": "D:\\Application Development\\AsmAppDev\\AsmAppDev\\wwwroot\\js\\site.js",

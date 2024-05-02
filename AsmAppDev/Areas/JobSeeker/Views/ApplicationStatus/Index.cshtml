@@ -4,25 +4,20 @@
 <table class="table table-bordered">
 	<thead>
 		<tr>
-			<td>Title</td>
-			<td>Description</td>
-			<td>Required Qualification</td>
-			<td>Deadline</td>
-			<td>Category</td>
+			<td>Job Title</td>
+			<td>Job Description</td>
+			<td>Day Apply</td>
 		</tr>
 	</thead>
 	<tbody>
-		@foreach (var Job in Model)
+		@foreach (var Object in Model)
 		{
 			<tr>
-				<td>@Job.JobId</td>
-				<td>@Job.Email</td>
-
-				<td></td>
-				<td>
-					<a asp-controller="Job" asp-action="Apply" asp-route-id="@Job.Id" class="btn btn-primary">Apply</a>
-				</td>
+				<td>@Object.Job.Title</td>
+				<td>@Object.Job.Description</td>
+				<td>@Object.DayApply</td>
 			</tr>
 		}
 	</tbody>
+	<a asp-controller="ApplicationStatus" asp-action="Index" class="btn btn-primary">Back</a>
 </table>
